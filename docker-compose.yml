@@ -1,0 +1,31 @@
+version: "3.8"
+
+services:
+  flight-service:
+    build:
+      context: ./Services/flight-service
+    container_name: flight-service
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./Services/flight-service:/app
+      - /app/node_modules
+    env_file:
+      - ./Services/flight-service/.env
+    depends_on:
+      mongodb:
+        condition: service_healthy
+
+  mongodb:
+    image: mongo
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
