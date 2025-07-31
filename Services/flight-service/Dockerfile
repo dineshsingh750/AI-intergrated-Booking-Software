@@ -11,7 +11,4 @@ COPY . .
 
 EXPOSE 5000
 
-COPY .env .env
-
 CMD ["npm", "run", "dev"]
-

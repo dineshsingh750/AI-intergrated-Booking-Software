@@ -6,7 +6,9 @@ const flightController = require('../controllers/flight.controller');
 router.get('/health', (req, res) => {
   res.status(200).json({ status: ' Flight service is running fine!' });
 });
-
+router.get('/', (req, res) => {
+  res.json({ message: "Flight route operational 🛫" });
+});
 // Search / Filter Routes (Specific first)
 router.get('/departure/city/:city', flightController.getFlightsByDepartureCity);  // 6
 router.get('/arrival/city/:city', flightController.getFlightsByArrivalCity);      // 7
